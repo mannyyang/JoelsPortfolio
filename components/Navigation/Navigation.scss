@@ -1,0 +1,27 @@
+@import '../variables.scss';
+
+.Navigation {
+  padding: 15px;
+  margin: 0;
+  background-color: white;
+  display: flex;
+  flex-direction: row;
+  list-style: none;
+}
+
+.Navigation-item {
+  padding: 0 2em;
+}
+
+.Navigation-link {
+  padding: 0.5em 1em;
+  color: $brand-color;
+  text-decoration: none;
+  text-transform: uppercase;
+  cursor: pointer;
+
+  &:hover {
+    border-bottom: 3px solid $brand-color;
+    color: $text-color;
+  }
+}
