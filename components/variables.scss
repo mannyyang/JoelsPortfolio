@@ -9,14 +9,22 @@
  * -------------------------------------------------------------------------- */
 
 $body-bg: #f7bd0a;
-$text-color: #333;
-$brand-color: #21ce99;
+$text-color: #d2d2d2;
+$subheader-text-color: #222222;
+$brand-color: #fdca00;
+
+$navigation-size: 65px;
+$footer-size: 150px;
 
 /*
  * Typography
  * -------------------------------------------------------------------------- */
 
 $font-family-base: 'bebas-neue', 'Helvetica', sans-serif;
+$font-base-size: 20px;
+$navigation-font-size: 18px;
+$small-font-size: 14px;
+$social-font-size: 20px;
 
 /*
  * Media queries breakpoints

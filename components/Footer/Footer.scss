@@ -1,0 +1,46 @@
+@import '../variables.scss';
+
+.Footer {
+  width: 100%;
+  height: $footer-size;
+  display: flex;
+  position: fixed;
+  bottom: 0;
+  padding: 0 50px;
+  background-color: white;
+
+  z-index: 20;
+}
+
+.Footer-item {
+  align-self: center;
+  align-content: center;
+  padding: 0 15px;
+  text-transform: uppercase;
+
+  &.small {
+    font-size: $small-font-size;
+  }
+
+  &.center {
+    margin: 0 auto;
+  }
+
+  .social {
+    font-size: $social-font-size;
+  }
+
+  img {
+    width: 65px;
+  }
+
+  .Footer-links {
+    margin-top: -12px;
+    position: absolute;
+    left: 42%;
+
+    a {
+      padding: 0 15px;
+    }
+  }
+}

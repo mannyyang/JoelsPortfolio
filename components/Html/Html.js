@@ -16,19 +16,7 @@ class Html extends Component {
     debug: PropTypes.bool.isRequired,
   };
 
-  componentDidMount(){
-    (function(d) {
-      var config = {
-          kitId: 'qqe7oge',
-          scriptTimeout: 3000,
-          async: true
-        },
-        h=d.documentElement,t=setTimeout(function(){h.className=h.className.replace(/\bwf-loading\b/g,"")+" wf-inactive";},config.scriptTimeout),tk=d.createElement("script"),f=false,s=d.getElementsByTagName("script")[0],a;h.className+=" wf-loading";tk.src='https://use.typekit.net/'+config.kitId+'.js';tk.async=true;tk.onload=tk.onreadystatechange=function(){a=this.readyState;if(f||a&&a!="complete"&&a!="loaded")return;f=true;clearTimeout(t);try{Typekit.load(config)}catch(e){}};s.parentNode.insertBefore(tk,s)
-    })(document);
-  }
-
   render() {
-
     return (
       <html className="no-js" lang="">
       <head>
@@ -38,11 +26,19 @@ class Html extends Component {
         <meta name="description" content={this.props.description || description} />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="apple-touch-icon" href="apple-touch-icon.png" />
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" />
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" />
+        <script src="https://use.typekit.net/qqe7oge.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script>
+        <script src="http://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
         <script src={'/app.js?' + new Date().getTime()}></script>
       </head>
       <body>
+        <div id="Loading">
+          <img src="http://i.imgur.com/hj6kkLw.gif" alt=""/>
+        </div>
         <div id="app" dangerouslySetInnerHTML={{__html: this.props.body}} />
-
       </body>
       </html>
     );

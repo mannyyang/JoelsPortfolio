@@ -6,7 +6,6 @@
 
 import React, { Component } from 'react';
 import './Navigation.scss';
-import Link from '../Link';
 
 export default class extends Component {
 
@@ -14,10 +13,23 @@ export default class extends Component {
     return (
       <ul className="Navigation" role="menu">
         <li className="Navigation-item">
-          <a className="Navigation-link" href="/" onClick={Link.handleClick}>Home</a>
+          <a href="/jk_resume_v1.pdf" target="_blank">
+            <span>Resume</span>
+          </a>
         </li>
-        <li className="Navigation-item">
-          <a className="Navigation-link" href="/about" onClick={Link.handleClick}>About</a>
+        <li className="Navigation-item work-link">
+          <a href="#">
+            <span>Work</span>
+          </a>
+        </li>
+        <li className="Navigation-item center intro-link">
+          <img src="http://i.imgur.com/ZcPCEQs.gif" alt=""/>
+        </li>
+        <li className="Navigation-item right social">
+          <span><i className="fa fa-behance"></i></span>
+        </li>
+        <li className="Navigation-item right social">
+          <span><i className="fa fa-linkedin"></i></span>
         </li>
       </ul>
     );

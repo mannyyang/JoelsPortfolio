@@ -1,27 +1,42 @@
 @import '../variables.scss';
 
 .Navigation {
-  padding: 15px;
-  margin: 0;
-  background-color: white;
   display: flex;
-  flex-direction: row;
+  width: 100%;
+  height: $navigation-size;
+  position: fixed;
+  top: 0;
+  padding: 0 50px;
+  margin: 0;
+
+  background-color: white;
+
   list-style: none;
+
+  z-index: 20;
 }
 
 .Navigation-item {
-  padding: 0 2em;
-}
-
-.Navigation-link {
-  padding: 0.5em 1em;
-  color: $brand-color;
-  text-decoration: none;
+  align-self: center;
+  padding: 0 15px;
   text-transform: uppercase;
-  cursor: pointer;
 
-  &:hover {
-    border-bottom: 3px solid $brand-color;
-    color: $text-color;
+  &.center {
+    padding-bottom: 0;
+    padding-top: 4px;
+    margin: 0 auto;
   }
+
+  &.social {
+    font-size: $social-font-size;
+  }
+
+  img {
+    position: absolute;
+    top: 0;
+    left: 50%; /* position the left edge of the element at the middle of the parent */
+    transform: translateX(-50%);
+    width: 65px;
+  }
+
 }

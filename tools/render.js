@@ -28,8 +28,8 @@ function getPages() {
             path = path.substr(0, path.lastIndexOf('/index'));
           }
           return { path, file };
-        });
-        resolve(result);
+      });
+      resolve(result);
       }
     });
   });
