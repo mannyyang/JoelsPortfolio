@@ -1,15 +1,13 @@
 @import '../variables.scss';
 
 .Footer {
+  position: absolute;
   width: 100%;
   height: $footer-size;
   display: flex;
-  position: fixed;
-  bottom: 0;
-  padding: 0 50px;
+  padding: 10px 50px;
   background-color: white;
-
-  z-index: 20;
+  z-index: 0;
 }
 
 .Footer-item {
@@ -28,6 +26,10 @@
 
   .social {
     font-size: $social-font-size;
+
+    &:hover {
+      color: $social-color;
+    }
   }
 
   img {
@@ -35,7 +37,7 @@
   }
 
   .Footer-links {
-    margin-top: -12px;
+    margin-top: -14px;
     position: absolute;
     left: 42%;
 

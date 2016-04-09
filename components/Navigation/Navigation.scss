@@ -6,14 +6,11 @@
   height: $navigation-size;
   position: fixed;
   top: 0;
-  padding: 0 50px;
+  padding: 0 40px;
   margin: 0;
-
   background-color: white;
-
   list-style: none;
-
-  z-index: 20;
+  z-index: 5;
 }
 
 .Navigation-item {
@@ -23,12 +20,15 @@
 
   &.center {
     padding-bottom: 0;
-    padding-top: 4px;
     margin: 0 auto;
   }
 
-  &.social {
-    font-size: $social-font-size;
+  &.mobile {
+    display: none;
+  }
+
+  &.social a :hover {
+    color: $social-color;
   }
 
   img {

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Grid, Row, Col } from 'react-bootstrap';
+import Footer from '../components/Footer/Footer.js';
 
 export default class HomePage extends Component {
   constructor(props){
@@ -11,10 +12,6 @@ export default class HomePage extends Component {
   }
 
   componentDidMount(){
-
-    // TODO: remove from page component
-    // particle text
-    (function() {
 
       var canvas,
         context,
@@ -28,7 +25,7 @@ export default class HomePage extends Component {
        * List words.
        */
       var title = decodeURIComponent(window.location.hash.substring(1));
-      var word = title.toUpperCase(); //'STINK DIGITAL' ;
+      var word = title.toUpperCase().split("").join(String.fromCharCode(8202)); //'STINK DIGITAL' ;
 
       /*
        * Init.
@@ -39,7 +36,7 @@ export default class HomePage extends Component {
 
         canvas = document.createElement('canvas');
         canvas.width = innerWidth ;
-        canvas.height = innerHeight - 215;
+        canvas.height = innerHeight;
 
         particlesContainer.appendChild(canvas);
 
@@ -84,7 +81,7 @@ export default class HomePage extends Component {
       function onResize() {
 
         canvas.width = window.innerWidth;
-        canvas.height = 300;
+        canvas.height = window.innerHeight;
 
         // Reset the text particles, and align again on the center of screen
         nextText = [];
@@ -151,30 +148,58 @@ export default class HomePage extends Component {
        * @param seed.
        */
 
-      function createTextParticles(seed) {
+      function createTextParticles(seed, rad) {
 
-        for(var quantity = 0, len = seed; quantity < len; quantity++) {
+        if (rad)
+        {
+          for(var quantity = 0, len = seed; quantity < len; quantity++) {
 
-          var radius = randomBetween(0, 4);
-          var hasBorn = !(radius > 0 || radius < 4);
+            var radius = randomBetween(rad.min, rad.max);
+            var hasBorn = !(radius > rad.min || radius < rad.max);
 
-          text.push({
+            text.push({
 
-            x: getRandom(0, innerWidth),
-            y: getRandom(0, innerHeight),
+              x: getRandom(0, innerWidth),
+              y: getRandom(0, innerHeight),
 
-            hasBorn: hasBorn,
+              hasBorn: hasBorn,
 
-            ease: Math.random() * 0.005,
-            bornSpeed: Math.random() * 0.01,
+              ease: Math.random() * 0.005,
+              bornSpeed: Math.random() * 0.01,
 
-            radius: radius,
-            maxRadius: 4,
+              radius: radius,
+              maxRadius: rad.max,
 
-            interactive: false
-          });
+              interactive: false
+            });
 
+          }
         }
+        else {
+          for(var quantity = 0, len = seed; quantity < len; quantity++) {
+
+            var radius = randomBetween(0, 3);
+            var hasBorn = !(radius > 0 || radius < 3);
+
+            text.push({
+
+              x: getRandom(0, innerWidth),
+              y: getRandom(0, innerHeight),
+
+              hasBorn: hasBorn,
+
+              ease: Math.random() * 0.005,
+              bornSpeed: Math.random() * 0.01,
+
+              radius: radius,
+              maxRadius: 3,
+
+              interactive: false
+            });
+
+          }
+        }
+
 
       }
 
@@ -187,42 +212,167 @@ export default class HomePage extends Component {
         // Clear immediately the screen
         clear();
 
-        context.font = '900 ' + 170 + 'px Arial, sans-serif';
-        context.textAlign = 'center';
+        var currWidth = window.innerWidth;
+        var fontSize = 200;
 
-        context.fillText(word, canvas.width * 0.5, innerHeight * 0.42);
+        if (currWidth >= 1800){
+          context.font = '900 375px NewHouseDTS, Arial';
+          context.textAlign = 'center';
 
-        var surface = context.getImageData(0, 0, canvas.width, canvas.height);
+          context.fillText(word, canvas.width * 0.5, innerHeight * 0.55);
 
-        for(var width = 0; width < surface.width; width += 8) {
+          var surface = context.getImageData(0, 0, canvas.width, canvas.height);
 
-          for(var height = 0; height < surface.height; height += 8) {
+          for(var width = 0; width < surface.width; width += 10) {
 
-            var color = surface.data[(height * surface.width * 4) + (width * 4) - 1];
+            for(var height = 0; height < surface.height; height += 10) {
 
-            // The pixel color is white? So draw on it...
-            if(color === 255) {
+              var color = surface.data[(height * surface.width * 4) + (width * 4) - 1];
 
-              nextText.push({
+              // The pixel color is white? So draw on it...
+              if(color === 255) {
 
-                x: width - ~~(Math.random() * 10),
-                y: height + ~~(Math.random() * 10),
+                nextText.push({
 
-                orbit: getRandom(1, 3),
-                angle: 0.1
+                  x: width - ~~(Math.random() * 6.5),
+                  y: height + ~~(Math.random() * 6.5),
 
-              });
+                  orbit: getRandom(-1, 1),
+                  angle: 0.01
+
+                });
+
+              }
 
             }
 
           }
 
+          var seed = nextText.length;
+          var radius = {min: 2, max: 4};
+
+          // Recreate text particles, based on this seed
+          createTextParticles(seed, radius);
         }
+        else if (currWidth >= 1200 && currWidth < 1800){
+          context.font = '900 210px NewHouseDTS, Arial';
+          context.textAlign = 'center';
 
-        var seed = nextText.length;
+          context.fillText(word, canvas.width * 0.5, innerHeight * 0.55);
 
-        // Recreate text particles, based on this seed
-        createTextParticles(seed);
+          var surface = context.getImageData(0, 0, canvas.width, canvas.height);
+
+          for(var width = 0; width < surface.width; width += 8) {
+
+            for(var height = 0; height < surface.height; height += 8) {
+
+              var color = surface.data[(height * surface.width * 4) + (width * 4) - 1];
+
+              // The pixel color is white? So draw on it...
+              if(color === 255) {
+
+                nextText.push({
+
+                  x: width - ~~(Math.random() * 5),
+                  y: height + ~~(Math.random() * 5),
+
+                  orbit: getRandom(-1, 1),
+                  angle: 0.01
+
+                });
+
+              }
+
+            }
+
+          }
+
+          var seed = nextText.length;
+
+          // Recreate text particles, based on this seed
+          createTextParticles(seed);
+        }
+        else if (currWidth >= 992 && currWidth < 1200){
+          context.font = '900 155px NewHouseDTS, Arial';
+          context.textAlign = 'center';
+
+          context.fillText(word, canvas.width * 0.5, innerHeight * 0.45);
+          context.fillText(word, canvas.width * 0.5, innerHeight * 0.65);
+
+          var surface = context.getImageData(0, 0, canvas.width, canvas.height);
+
+          for(var width = 0; width < surface.width; width += 6) {
+
+            for(var height = 0; height < surface.height; height += 6) {
+
+              var color = surface.data[(height * surface.width * 4) + (width * 4) - 1];
+
+              // The pixel color is white? So draw on it...
+              if(color === 255) {
+
+                nextText.push({
+
+                  x: width - ~~(Math.random() * 5),
+                  y: height + ~~(Math.random() * 5),
+
+                  orbit: getRandom(-1, 1),
+                  angle: 0.01
+
+                });
+
+              }
+
+            }
+
+          }
+
+          var seed = nextText.length;
+
+          // Recreate text particles, based on this seed
+          createTextParticles(seed, {min: 0, max: 2});
+        }
+        else if (currWidth >= 768 &&currWidth < 992){
+          context.font = '900 120px NewHouseDTS, Arial';
+          context.textAlign = 'center';
+
+          context.fillText(word, canvas.width * 0.5, innerHeight * 0.45);
+          context.fillText(word, canvas.width * 0.5, innerHeight * 0.65);
+
+          var surface = context.getImageData(0, 0, canvas.width, canvas.height);
+
+          for(var width = 0; width < surface.width; width += 5) {
+
+            for(var height = 0; height < surface.height; height += 5) {
+
+              var color = surface.data[(height * surface.width * 4) + (width * 4) - 1];
+
+              // The pixel color is white? So draw on it...
+              if(color === 255) {
+
+                nextText.push({
+
+                  x: width - ~~(Math.random() * 5),
+                  y: height + ~~(Math.random() * 5),
+
+                  orbit: getRandom(-1, 1),
+                  angle: 0.01
+
+                });
+
+              }
+
+            }
+
+          }
+
+          var seed = nextText.length;
+
+          // Recreate text particles, based on this seed
+          createTextParticles(seed, {min: 0, max: 2});
+        }
+        else {
+
+        }
 
       }
 
@@ -238,16 +388,14 @@ export default class HomePage extends Component {
         [].forEach.call(nextText, function(particle, index) {
 
           if(!text[index].interactive) {
-            text[index].x += ((particle.x + Math.cos(particle.angle + index) * particle.orbit) - text[index].x) * 0.04;
-            text[index].y += ((particle.y + Math.sin(particle.angle + index) * particle.orbit) - text[index].y) * 0.04;
+            text[index].x += ((particle.x + Math.cos(particle.angle + index) * particle.orbit) - text[index].x) * 0.06;
+            text[index].y += ((particle.y + Math.sin(particle.angle + index) * particle.orbit) - text[index].y) * 0.06;
           }
           else {
 
             if (text[index].x <= mouse.x && text[index].y <= mouse.y){
               text[index].x = text[index].x - ~~(radius / distanceTo(text[index], mouse));
               text[index].y = text[index].y - ~~(radius / distanceTo(text[index], mouse));
-
-
 
               text[index].x += ((particle.x + Math.sin(particle.angle + 100) * 20) - text[index].x) * 0.08;
               text[index].y += ((particle.y + Math.cos(particle.angle + 100) * 20) - text[index].y) * 0.08;
@@ -373,7 +521,6 @@ export default class HomePage extends Component {
       }
 
 
-
       /*
        * Request new frame by Paul Irish.
        * 60 FPS.
@@ -395,184 +542,169 @@ export default class HomePage extends Component {
 
       init();
 
-    })();
-
-    // TODO: make into separate component
-    // background particles
-    particlesJS("particles-js", {
-      "particles": {
-        "number": {
-          "value": 30,
-          "density": {
-            "enable": true,
-            "value_area": 800
-          }
-        },
-        "color": {
-          "value": "#222222"
-        },
-        "shape": {
-          "type": "circle",
-          "stroke": {
-            "width": 0,
-            "color": "#000000"
-          },
-          "polygon": {
-            "nb_sides": 5
-          },
-          "image": {
-            "src": "",
-            "width": 100,
-            "height": 100
-          }
-        },
-        "opacity": {
-          "value": 1,
-          "random": true,
-          "anim": {
-            "enable": true,
-            "speed": 0.5,
-            "opacity_min": 0.0,
-            "sync": false
-          }
-        },
-        "size": {
-          "value": 3,
-          "random": true,
-          "anim": {
-            "enable": false,
-            "speed": 40,
-            "size_min": 0.1,
-            "sync": false
-          }
-        },
-        "line_linked": {
-          "enable": false,
-          "distance": 50,
-          "color": "#222222",
-          "opacity": 0.3,
-          "width": 1
-        },
-        "move": {
-          "enable": true,
-          "speed": 6,
-          "direction": "none",
-          "random": false,
-          "straight": false,
-          "out_mode": "out",
-          "bounce": false,
-          "attract": {
-            "enable": false,
-            "rotateX": 600,
-            "rotateY": 1200
-          }
-        }
-      },
-      "interactivity": {
-        "detect_on": "window",
-        "events": {
-          "onhover": {
-            "enable": true,
-            "mode": "push"
-          },
-          "onclick": {
-            "enable": false,
-            "mode": "push"
-          },
-          "resize": true
-        },
-        "modes": {
-          "grab": {
-            "distance": 140,
-            "line_linked": {
-              "opacity": 1
-            }
-          },
-          "bubble": {
-            "distance": 400,
-            "size": 40,
-            "duration": 2,
-            "opacity": 8,
-            "speed": 3
-          },
-          "repulse": {
-            "distance": 200,
-            "duration": 0.4
-          },
-          "push": {
-            "particles_nb": 4
-          },
-          "remove": {
-            "particles_nb": 2
-          }
-        }
-      },
-      "retina_detect": true
-    });
-
-    var workpageHeight = window.innerHeight - 215;
-    this.setState({
-      height: workpageHeight/2 + "px"
-    });
   }
 
   render() {
 
     return (
       <div className="wrapper">
-        <div className={"Home-Page " + this.state.fadeIn}>
-          <span id="Hello" className="tk-bebas-neue">Hello,</span>
-          <img id="Arrow" className="pulse work-link" src="http://i.imgur.com/vEjcmNs.png" alt=""/>
-          <div id="particles-js"></div>
+
+        <div className="Home-Page">
+          <span id="Hello" className="main-hello">Hello,</span>
+          <span id="Hello2">Hello,</span>
           <div className="particles-text"></div>
+          <span id="Mobile-Name"></span>
         </div>
         <div className="Work-Page" >
           <Grid fluid={true}>
             <Row>
-              <Col className="Tile-container" md={3} style={{height: this.state.height}}>
-                <div className="Tile">
-                  <img src="http://i.imgur.com/gZONIZF.jpg" alt="Butterfinger" />
-                </div>
+              <Col className="Tile-container" xs={12} sm={6} md={6} lg={3}>
+                <a href="https://www.behance.net/gallery/29940187/Butterfinger-Website-Redesign" target="_blank">
+                  <div className="Tile">
+                      <img src="http://i.imgur.com/ZSqwayY.jpg" alt="Butterfinger" />
+                  </div>
+                  <div className="Tile-title">
+                    Butterfinger <br/> Redesign
+                  </div>
+                  <span className="Tile-subtitle">
+                    website redesign
+                  </span>
+
+                  <div className="Tile-overlay">
+                    <div className="rectangle">
+                    </div>
+                  </div>
+                </a>
               </Col>
-              <Col className="Tile-container" md={3} style={{height: this.state.height}}>
-                <div className="Tile">
-                  <img src="http://i.imgur.com/qXPqHAr.jpg" alt="Stronger Everyday"/>
-                </div>
+              <Col className="Tile-container" xs={12} sm={6} md={6} lg={3}>
+                <a href="https://www.behance.net/gallery/29850167/Muscle-Milk-Stronger-Everyday" target="_blank">
+                  <div className="Tile">
+                    <img src="http://i.imgur.com/Dh91CPE.jpg" alt="Stronger Everyday"/>
+                  </div>
+                  <div className="Tile-title">
+                    Muscle Milk <br/>Pitch
+                  </div>
+                <span className="Tile-subtitle">
+                  campaign work
+                </span>
+
+                  <div className="Tile-overlay">
+                    <div className="rectangle">
+                    </div>
+                  </div>
+                </a>
               </Col>
-              <Col className="Tile-container" md={3} style={{height: this.state.height}}>
-                <div className="Tile">
-                  <img src="http://i.imgur.com/EfVXKjv.jpg" alt="Sweet Tarts"/>
-                </div>
+              <Col className="Tile-container" xs={12} sm={6} md={6} lg={3}>
+                <a href="https://www.behance.net/gallery/30095651/Sweetarts" target="_blank">
+                  <div className="Tile">
+                    <img src="http://i.imgur.com/EfVXKjv.jpg" alt="Sweet Tarts"/>
+                  </div>
+                  <div className="Tile-title">
+                    Sweetarts <br/>Re&#45;launch
+                  </div>
+                <span className="Tile-subtitle">
+                  campaign work
+                </span>
+
+                  <div className="Tile-overlay">
+                    <div className="rectangle">
+                    </div>
+                  </div>
+                </a>
               </Col>
-              <Col className="Tile-container" md={3} style={{height: this.state.height}}>
-                <div className="Tile">
-                  <img src="http://i.imgur.com/IVy7yok.jpg" alt="Reeces"/>
-                </div>
+              <Col className="Tile-container" xs={12} sm={6} md={6} lg={3}>
+                <a href="https://www.behance.net/gallery/30026173/Butterfinger-Cups-Perfecter" target="_blank">
+                  <div className="Tile">
+                    <img src="http://i.imgur.com/0nrsoM5.jpg" alt="Reeces"/>
+                  </div>
+                  <div className="Tile-title">
+                    Butterfinger <br/> 'Perfecter'
+                  </div>
+                <span className="Tile-subtitle">
+                  animated videos
+                </span>
+
+                  <div className="Tile-overlay">
+                    <div className="rectangle">
+                    </div>
+                  </div>
+                </a>
               </Col>
             </Row>
             <Row>
-              <Col className="Tile-container" md={3} style={{height: this.state.height}}>
+              <Col className="Tile-container" xs={12} sm={6} md={6} lg={3}>
+                <a href="https://www.behance.net/gallery/30002559/The-Peanuts-Movie" target="_blank">
+                  <div className="Tile">
+                    <img src="http://i.imgur.com/aW7Vimh.jpg" alt="Peanuts"/>
+                  </div>
+                  <div className="Tile-title fadeInDuration">
+                    The peanuts &amp; <br/>Nestle crunch
+                  </div>
+                  <span className="Tile-subtitle">
+                    social
+                  </span>
+
+                  <div className="Tile-overlay">
+                    <div className="rectangle">
+                    </div>
+                  </div>
+                </a>
+              </Col>
+              <Col className="Tile-container" xs={12} sm={6} md={6} lg={3}>
                 <div className="Tile">
-                  <img src="http://i.imgur.com/ZCwYvEa.jpg" alt="Peanuts"/>
+                  <img src="http://i.imgur.com/7JavQNy.jpg" alt="Butterfinger"/>
+                </div>
+                <div className="Tile-title fadeInDuration">
+                  Butterfinger <br/> Pinterest
+                </div>
+                <span className="Tile-subtitle">
+                  photoshoot
+                </span>
+
+                <div className="Tile-overlay">
+                  <div className="rectangle">
+                  </div>
                 </div>
               </Col>
-              <Col className="Tile-container" md={3} style={{height: this.state.height}}>
-                <div className="Tile">
-                  <img src="http://i.imgur.com/CNBGq5f.jpg" alt="Butterfinger"/>
-                </div>
+              <Col className="Tile-container" xs={12} sm={6} md={6} lg={3}>
+                <a href="https://www.behance.net/gallery/29847505/Butterfinger-Get-In-Our-Corner" target="_blank">
+                  <div className="Tile">
+                    <img src="http://i.imgur.com/iUMsaWo.jpg" alt="Reeces"/>
+                  </div>
+                  <div className="Tile-title fadeInDuration">
+                    Butterfinger <br/>'Get in our corner'
+                  </div>
+                  <span className="Tile-subtitle">
+                    social
+                  </span>
+
+                  <div className="Tile-overlay">
+                    <div className="rectangle">
+                    </div>
+                  </div>
+                </a>
               </Col>
-              <Col className="Tile-container" md={3} style={{height: this.state.height}}>
-                <div className="Tile">
-                  <img src="http://i.imgur.com/z7d32nA.jpg" alt="Reeces"/>
-                </div>
-              </Col>
-              <Col className="Tile-container" md={3} style={{height: this.state.height}}>
-                <div className="Tile">
-                  <img src="http://i.imgur.com/mDVIxFh.jpg" alt="The Details"/>
-                </div>
+              <Col className="Tile-container" xs={12} sm={6} md={6} lg={3}>
+                <a href="https://www.behance.net/gallery/30043421/Whitstik-Surfboard-Repair" target="_blank">
+                  <div className="Tile">
+                    <img src="http://i.imgur.com/nW4fjH4.jpg" alt="The Details"/>
+                  </div>
+                  <div className="Tile-title fadeInDuration">
+                    whitstik redesign
+                  </div>
+                  <span className="Tile-subtitle">
+                    website redesign
+                  </span>
+
+                  <div className="Tile-overlay">
+                    <div className="rectangle">
+                    </div>
+                  </div>
+                </a>
               </Col>
             </Row>
           </Grid>
+          <Footer />
         </div>
       </div>
 

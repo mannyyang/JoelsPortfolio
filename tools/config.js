@@ -73,10 +73,10 @@ const config = {
         test: /\.txt$/,
         loader: 'raw-loader',
       }, {
-        test: /\.(png|jpg|jpeg|gif|svg|woff|woff2)$/,
+        test: /\.(png|jpg|jpeg|gif|svg|woff|woff2|ttf|otf)$/,
         loader: 'url-loader?limit=10000',
       }, {
-        test: /\.(eot|ttf|wav|mp3)$/,
+        test: /\.(eot|ttf|woff|wav|mp3)$/,
         loader: 'file-loader',
       },
     ],

@@ -5,7 +5,7 @@
  */
 
 export default {
-  title: "Joel's Portfolio",
-  description: "Joel's Portfolio"
+  title: "Joel Kennedy",
+  description: ""
 };
 

@@ -12,8 +12,10 @@ $body-bg: #f7bd0a;
 $text-color: #d2d2d2;
 $subheader-text-color: #222222;
 $brand-color: #fdca00;
+$social-color: #3690cb;
+$tile-text-color: #black;
 
-$navigation-size: 65px;
+$navigation-size: 70px;
 $footer-size: 150px;
 
 /*
@@ -21,10 +23,12 @@ $footer-size: 150px;
  * -------------------------------------------------------------------------- */
 
 $font-family-base: 'bebas-neue', 'Helvetica', sans-serif;
-$font-base-size: 20px;
+$font-base-size: 14px;
+$font-base-weight: 300;
 $navigation-font-size: 18px;
-$small-font-size: 14px;
-$social-font-size: 20px;
+$small-font-size: 12px;
+$social-font-size: 18px;
+$letter-spacing: 1.4px;
 
 /*
  * Media queries breakpoints
